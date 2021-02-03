@@ -45,7 +45,66 @@ static void process_events()
 
 static void draw_screen(void)
 {
-    //TODO add drawing in here
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glLoadIdentity();   // Call this before setting the viewing position
+
+    // We are going to set our position to be down the Y-Axis looking at the
+    // center of the coordinate frame.  The positive Z-Axis will be up.
+
+    gluLookAt( 20.0,   0.0, 5.0,  // Eye
+                0.0,   0.0, 0.0,  // Center
+                0.0,   0.0, 1.0); // Up
+
+
+    glEnable(GL_DEPTH_TEST);
+
+    glColor3f(0.0,1.0,0.0);
+
+    // This should be to draw a cylinder
+    glPushMatrix();
+    glTranslated(2.0,0.0,0.0);
+    glColor3f (0.0,0.0,1.0);
+    gluCylinder(gluNewQuadric(),
+            (GLdouble) 0.1,
+            (GLdouble) 0.1,
+            (GLdouble) 4.0,
+            (GLint)    20,
+            (GLint)    20 );
+    glPopMatrix();
+
+    // This should draw a green doughnut
+    glPushMatrix();
+    glRotated(90.0,0,1,0);
+    glTranslatef(2.0,0.0,0.0);
+    glColor3f (0.0,1.0,0.0);
+    gluDisk(gluNewQuadric(),
+            (GLdouble) 0.5,
+            (GLdouble) 1.0,
+            (GLint)     10,
+            (GLint)     20 );
+    glPopMatrix();
+
+    // This should draw a red sphere
+    glPushMatrix();
+    glTranslatef(-3.0,1.0,1.0);
+    glColor3f (1.0,0.0,0.0);
+    gluSphere(gluNewQuadric(),
+             (GLdouble) 1.5,
+             (GLint)     10,
+             (GLint)     10 );
+    glPopMatrix();
+
+    // This should draw a purple ellipsoid
+    glPushMatrix();
+    glTranslatef(-3.0,1.0,-4.0);
+    glScalef(0.5,0.5,1.0);
+    glColor3f (1.0,0.0,1.0);
+    gluSphere(gluNewQuadric(),
+             (GLdouble) 1.5,
+             (GLint)     10,
+             (GLint)     10 );
+    glPopMatrix();
+
     SDL_GL_SwapBuffers();
 }
 
@@ -62,6 +121,8 @@ static void setup_opengl(int width, int height)
 
     float ratio = (float) width / (float) height;
     gluPerspective(60.0, ratio, 1.0, 1024.0);
+
+    glMatrixMode(GL_MODELVIEW);
 }
 
 int main(int argc, char* argv[])
@@ -94,8 +155,6 @@ int main(int argc, char* argv[])
         quit(1);
     }
 
-    width = 640;
-    height = 480;
     bpp = info->vfmt->BitsPerPixel;
 
 
@@ -105,13 +164,19 @@ int main(int argc, char* argv[])
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    flags = SDL_OPENGL | SDL_RESIZABLE;
+    //flags = SDL_OPENGL | SDL_FULLSCREEN;
+    flags = SDL_OPENGL | SDL_RESIZABLE | SDL_NOFRAME;
 
-    if(SDL_SetVideoMode(width, height, bpp, flags) == 0)
+    if(SDL_SetVideoMode(width, height, bpp, flags) == 0) //a width and height of 0 makes the resolution default to the display resolution
     {
         std::cerr << "Video mode set failed: " << SDL_GetError() << std::endl;;
         quit(1);
     }
+
+    //we know have to query what the display resolution is
+    SDL_Surface* surface = SDL_GetVideoSurface();
+    width = surface->w;
+    height = surface->h;
 
     setup_opengl(width, height);
 
