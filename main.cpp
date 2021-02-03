@@ -2,13 +2,10 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include "prototypes.h"
+
 #include <iostream>
 
-static void quit(int code)
-{
-    SDL_Quit();
-    exit(code);
-}
 
 static void handle_key_down(SDL_keysym* keysym)
 {
