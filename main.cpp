@@ -2,8 +2,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
 
 static void quit(int code)
 {
@@ -81,7 +80,7 @@ int main(int argc, char* argv[])
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         /* Failed, exit. */
-        fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
+        std::cerr << "Video initialization failed: " << SDL_GetError() << std::endl;
         quit(1);
     }
 
@@ -91,7 +90,7 @@ int main(int argc, char* argv[])
     if(!info)
     {
         /* This should probably never happen. */
-        fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
+        std::cerr << "Video query failed: " << SDL_GetError() << std::endl;;
         quit(1);
     }
 
@@ -110,7 +109,7 @@ int main(int argc, char* argv[])
 
     if(SDL_SetVideoMode(width, height, bpp, flags) == 0)
     {
-        fprintf(stderr, "Video mode set failed: %s\n", SDL_GetError());
+        std::cerr << "Video mode set failed: " << SDL_GetError() << std::endl;;
         quit(1);
     }
 
