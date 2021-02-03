@@ -116,7 +116,8 @@ int main(int argc, char* argv[])
     setup_opengl(width, height);
 
     //render loop
-    while(1) {
+    while(1)
+    {
         /* Process incoming events. */
         process_events();
         /* Draw the screen. */
