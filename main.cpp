@@ -161,8 +161,8 @@ int main(int argc, char* argv[])
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    //flags = SDL_OPENGL | SDL_FULLSCREEN;
-    flags = SDL_OPENGL | SDL_RESIZABLE | SDL_NOFRAME;
+    flags = SDL_OPENGL | SDL_FULLSCREEN;
+    //flags = SDL_OPENGL | SDL_RESIZABLE;
 
     if(SDL_SetVideoMode(width, height, bpp, flags) == 0) //a width and height of 0 makes the resolution default to the display resolution
     {
