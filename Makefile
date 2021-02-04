@@ -1,7 +1,7 @@
 CXX = g++
 LDLIBS =  -lglut -lGL -lGLU -lm -lSDL
 
-OBJS = quit.o events.o display.o
+OBJS = quit.o events.o display.o init.o
 HEADERS = prototypes.h
 
 debug ?= n
@@ -13,7 +13,7 @@ endif
 
 
 pendpoc :	main.o $(OBJS)
-	$(CXX) $(CFLAGS) main.o -o pendpoc $(LDLIBS) $(OBJS)
+	$(CXX) $(CFLAGS) main.o $(OBJS) $(LDLIBS) -o pendpoc
 
 main.o : main.cpp $(HEADERS)
 	$(CXX) $(CFLAGS) main.cpp -c
@@ -26,6 +26,9 @@ events.o : events.cpp $(HEADERS)
 
 display.o : display.cpp $(HEADERS)
 	$(CXX) $(CFLAGS) display.cpp -c
+
+init.o : init.cpp $(HEADERS)
+	$(CXX) $(CFLAGS) init.cpp -c
 
 clean:
 	rm *.o
