@@ -1,7 +1,7 @@
 CXX = g++
 LDLIBS =  -lglut -lGL -lGLU -lm -lSDL
 
-OBJS = quit.o events.o display.o init.o
+OBJS = quit.o events.o display.o init.o model.o
 HEADERS = prototypes.h
 
 debug ?= n
@@ -29,6 +29,9 @@ display.o : display.cpp $(HEADERS)
 
 init.o : init.cpp $(HEADERS)
 	$(CXX) $(CFLAGS) init.cpp -c
+
+model.o : model.cpp $(HEADERS)
+	$(CXX) $(CFLAGS) model.cpp -c
 
 clean:
 	rm *.o

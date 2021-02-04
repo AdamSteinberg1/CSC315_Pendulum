@@ -12,6 +12,8 @@ void setup_opengl(int width, int height)
 
     glViewport(0, 0, width, height);
 
+    glEnable(GL_DEPTH_TEST);
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 

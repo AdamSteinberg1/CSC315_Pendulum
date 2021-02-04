@@ -1,67 +1,33 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <cmath>
 
-void display()
+
+void display(double theta)
 {
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();   // Call this before setting the viewing position
 
-    // We are going to set our position to be down the Y-Axis looking at the
-    // center of the coordinate frame.  The positive Z-Axis will be up.
-
-    gluLookAt( 20.0,   0.0, 5.0,  // Eye
-                0.0,   0.0, 0.0,  // Center
-                0.0,   0.0, 1.0); // Up
+    //Set camera parameters
+    gluLookAt(  0.0,   5.0, 0.0,  // Eye Position
+                5.0,   0.0, 5.0,  // Center of view
+                0.0,   1.0, 0.0); // Up Vector
 
 
-    glEnable(GL_DEPTH_TEST);
-
+    // Draw a blue cylinder
     glColor3f(0.0,1.0,0.0);
-
-    // This should be to draw a cylinder
     glPushMatrix();
-    glTranslated(2.0,0.0,0.0);
+    glTranslated(5.0,4.0,5.0);
+    glRotated(theta * 180 / M_PI, 0,0,1);
+    glRotated(90, 1,0,0);
     glColor3f (0.0,0.0,1.0);
     gluCylinder(gluNewQuadric(),
-            (GLdouble) 0.1,
-            (GLdouble) 0.1,
-            (GLdouble) 4.0,
-            (GLint)    20,
-            (GLint)    20 );
-    glPopMatrix();
-
-    // This should draw a green doughnut
-    glPushMatrix();
-    glRotated(90.0,0,1,0);
-    glTranslatef(2.0,0.0,0.0);
-    glColor3f (0.0,1.0,0.0);
-    gluDisk(gluNewQuadric(),
-            (GLdouble) 0.5,
-            (GLdouble) 1.0,
-            (GLint)     10,
-            (GLint)     20 );
-    glPopMatrix();
-
-    // This should draw a red sphere
-    glPushMatrix();
-    glTranslatef(-3.0,1.0,1.0);
-    glColor3f (1.0,0.0,0.0);
-    gluSphere(gluNewQuadric(),
-             (GLdouble) 1.5,
-             (GLint)     10,
-             (GLint)     10 );
-    glPopMatrix();
-
-    // This should draw a purple ellipsoid
-    glPushMatrix();
-    glTranslatef(-3.0,1.0,-4.0);
-    glScalef(0.5,0.5,1.0);
-    glColor3f (1.0,0.0,1.0);
-    gluSphere(gluNewQuadric(),
-             (GLdouble) 1.5,
-             (GLint)     10,
-             (GLint)     10 );
+            (GLdouble) 0.2,   //bottom radius
+            (GLdouble) 0.2,   //top radius
+            (GLdouble) 6.0,   //height
+            (GLint)    20,    //slices => makes the base an n-gon
+            (GLint)    1 );   //stacks
     glPopMatrix();
 
     SDL_GL_SwapBuffers();
