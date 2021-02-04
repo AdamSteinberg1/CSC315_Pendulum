@@ -1,7 +1,7 @@
 CXX = g++
 LDLIBS =  -lglut -lGL -lGLU -lm -lSDL
 
-OBJS = quit.o
+OBJS = quit.o events.o
 HEADERS = prototypes.h
 
 debug ?= n
@@ -20,6 +20,9 @@ main.o : main.cpp $(HEADERS)
 
 quit.o : quit.cpp $(HEADERS)
 	$(CXX) $(CFLAGS) quit.cpp -c
+
+events.o : events.cpp $(HEADERS)
+	$(CXX) $(CFLAGS) events.cpp -c
 
 clean:
 	rm *.o

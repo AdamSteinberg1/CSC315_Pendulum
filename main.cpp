@@ -7,40 +7,6 @@
 #include <iostream>
 
 
-static void handle_key_down(SDL_keysym* keysym)
-{
-    switch(keysym->sym)
-    {
-      case SDLK_ESCAPE:
-      case SDLK_q:
-          quit(0);
-          break;
-      default:
-          break;
-    }
-}
-
-static void process_events()
-{
-    SDL_Event event;
-
-    /* Grab all the events off the queue. */
-    while(SDL_PollEvent(&event))
-    {
-        switch(event.type)
-        {
-          case SDL_KEYDOWN:
-              /* Handle key presses. */
-              handle_key_down(&event.key.keysym);
-              break;
-          case SDL_QUIT:
-              /* Handle quit requests (like Ctrl-c). */
-              quit(0);
-              break;
-        }
-    }
-}
-
 static void draw_screen(void)
 {
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
