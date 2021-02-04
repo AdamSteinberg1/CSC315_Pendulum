@@ -12,6 +12,7 @@ static void handle_key_down(SDL_keysym* keysym)
     switch(keysym->sym)
     {
       case SDLK_ESCAPE:
+      case SDLK_q:
           quit(0);
           break;
       default:
