@@ -12,13 +12,14 @@ int main(int argc, char* argv[])
 {
     glutInit(&argc, argv);
     init();
-    double fps = 0;
+
 
     //initial angle
     double theta = M_PI  * 1.0;
     //initial angular velocity
     double omega = 0.05;
 
+    double fps = 0;
     double period = 0;
 
     //render loop
