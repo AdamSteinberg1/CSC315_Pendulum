@@ -2,6 +2,9 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cmath>
+#include <string>
+#include <GL/glut.h>
+
 
 void drawPendulum(double theta)
 {
@@ -155,8 +158,71 @@ void drawMan()
   glPopMatrix();
 }
 
+void drawMetrics(double fps, double period)
+{
+  //get window width and height
+  SDL_Surface* surface = SDL_GetVideoSurface();
+  int width = surface->w;
+  int height = surface->h;
 
-void display(double theta)
+  //clear the modelview matrix
+  glMatrixMode(GL_MODELVIEW);
+  glPushMatrix();
+  glLoadIdentity();
+  //set the projection matrix to a 2D orthographic projection in pixel coordinates
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix();
+  glLoadIdentity();
+  gluOrtho2D(0, width, 0, height);
+
+
+  std::string fpsText = "FPS = " + std::to_string(fps);
+  std::string periodText = "Period = " + std::to_string(period);
+
+  void* font = GLUT_BITMAP_HELVETICA_18;
+  int textHeight = 18; //this font has a height of 18
+
+  //calculate how many pixels wide the text is
+  int textWidth = 0;
+  for(char c: fpsText)
+  {
+    textWidth += glutBitmapWidth(font, c);
+  }
+
+
+  glColor3f(1.0,1.0,1.0);
+  //position on screen to start writing
+  glRasterPos2i(width - textWidth, height-textHeight);
+
+  //write string
+  for (char c : fpsText)
+  {
+      glutBitmapCharacter(font, c);
+  }
+
+
+  //calculate how many pixels wide the text is
+  textWidth = 0;
+  for(char c: periodText)
+  {
+    textWidth += glutBitmapWidth(font, c);
+  }
+
+  glRasterPos2i(width - textWidth, height-2*textHeight);
+
+  //write string
+  for (char c : periodText)
+  {
+      glutBitmapCharacter(font, c);
+  }
+
+  glPopMatrix();
+  glMatrixMode(GL_MODELVIEW);
+  glPopMatrix();
+}
+
+
+void display(double theta, double fps, double period)
 {
 
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -169,5 +235,6 @@ void display(double theta)
 
   drawPendulum(theta);
   drawMan();
+  drawMetrics(fps, period);
   SDL_GL_SwapBuffers();
 }

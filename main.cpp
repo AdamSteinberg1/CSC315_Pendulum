@@ -1,6 +1,7 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
 #include <iostream>
 #include <cmath>
 #include "prototypes.h"
@@ -9,6 +10,7 @@
 
 int main(int argc, char* argv[])
 {
+    glutInit(&argc, argv);
     init();
     double fps = 0;
 
@@ -25,18 +27,13 @@ int main(int argc, char* argv[])
         // Process incoming events.
         process_events();
         // Draw the screen.
-        display(theta);
+        display(theta, fps, period);
         //get fps for this frame
         fps = getFPS();
         //get most recent period
         period = getPeriod(omega);
         // Move the pendulum
         step(theta, omega, fps);
-
-        std::cout << "fps = " << fps << std::endl;
-
-        std::cout << "period = " << period << std::endl;
-
     }
 
     return 0;
