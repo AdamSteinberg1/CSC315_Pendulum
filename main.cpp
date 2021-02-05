@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <cmath>
+#include <stdlib.h>
 #include "prototypes.h"
 
 
@@ -13,14 +14,19 @@ int main(int argc, char* argv[])
     glutInit(&argc, argv);
     init();
 
-
     //initial angle
     double theta = M_PI  * 1.0;
     //initial angular velocity
     double omega = 0.05;
 
-    double fps = 0;
+    double fps = 1;
     double period = 0;
+
+    double t_step = -1;
+    if(argc > 1)
+    {
+      t_step = strtod(argv[1], NULL);
+    }
 
     //render loop
     while(1)
@@ -34,7 +40,10 @@ int main(int argc, char* argv[])
         //get most recent period
         period = getPeriod(omega);
         // Move the pendulum
-        step(theta, omega, fps);
+        if(t_step == -1)
+          step(theta, omega, 1/fps);
+        else
+          step(theta, omega, t_step);
     }
 
     return 0;

@@ -35,28 +35,25 @@ double omegadot(double t, double theta, double omega)
 
 // This is the function that actually propagates the motion
 
-void step(double & theta, double & omega, double fps)
+void step(double & theta, double & omega, double t_step)
 {
   static double t = 0;
-  // Time step variable
-  double h;
+
   // variables for fourth-order Runge-Kutta method
   double k1, k2, k3, k4, j1, j2, j3, j4;
-
-  h = 1.0 / fps;
 
 // Fourth-Order Runge-Kutta propagation step for second order dynamical systems
   k1 = thetadot(t, theta, omega);
   j1 = omegadot(t, theta, omega);
-  k2 = thetadot(t+h/2, theta+h/2*k1, omega+h/2*j1);
-  j2 = omegadot(t+h/2, theta+h/2*k1, omega+h/2*j1);
-  k3 = thetadot(t+h/2, theta+h/2*k2, omega+h/2*j2);
-  j3 = omegadot(t+h/2, theta+h/2*k2, omega+h/2*j2);
-  k4 = thetadot(t+h, theta+h*k3, omega+h*j3);
-  j4 = omegadot(t+h, theta+h*k3, omega+h*j3);
-  theta += h/6*(k1+2*k2+2*k3+k4);
-  omega += h/6*(j1+2*j2+2*j3+j4);
-  t += h;
+  k2 = thetadot(t+t_step/2, theta+t_step/2*k1, omega+t_step/2*j1);
+  j2 = omegadot(t+t_step/2, theta+t_step/2*k1, omega+t_step/2*j1);
+  k3 = thetadot(t+t_step/2, theta+t_step/2*k2, omega+t_step/2*j2);
+  j3 = omegadot(t+t_step/2, theta+t_step/2*k2, omega+t_step/2*j2);
+  k4 = thetadot(t+t_step, theta+t_step*k3, omega+t_step*j3);
+  j4 = omegadot(t+t_step, theta+t_step*k3, omega+t_step*j3);
+  theta += t_step/6*(k1+2*k2+2*k3+k4);
+  omega += t_step/6*(j1+2*j2+2*j3+j4);
+  t += t_step;
 
   if(theta > 2 * M_PI)
     theta -= 2 * M_PI;
