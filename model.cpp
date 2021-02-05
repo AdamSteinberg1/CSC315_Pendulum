@@ -35,7 +35,7 @@ double omegadot(double t, double theta, double omega)
 
 // This is the function that actually propagates the motion
 
-void step(double & theta, double & omega )
+void step(double & theta, double & omega, double fps)
 {
   static double t = 0;
   // Time step variable
@@ -43,7 +43,7 @@ void step(double & theta, double & omega )
   // variables for fourth-order Runge-Kutta method
   double k1, k2, k3, k4, j1, j2, j3, j4;
 
-  h = 0.01;
+  h = 1.0 / fps;
 
 // Fourth-Order Runge-Kutta propagation step for second order dynamical systems
   k1 = thetadot(t, theta, omega);
