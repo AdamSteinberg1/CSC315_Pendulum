@@ -5,14 +5,13 @@
 
 double getFPS()
 {
-  static double lastTime = 0; //only set to 0 on the first time this function is called
+  static Uint32 lastTime = 0; //only set to 0 on the first time this function is called
                               //otherwise has the value assigned to it last time the function was called
 
-  double currTime = SDL_GetTicks() * 0.001; //current timestamp in seconds
-  double delta_t = currTime - lastTime; //the time since this function was last called. i.e. seconds per frame
-  double fps =  1.0 / delta_t;  // reciprocal of seconds per frame is frames per seconds
+  Uint32 currTime = SDL_GetTicks(); //current timestamp in milliseconds
+  Uint32 delta_t = currTime - lastTime; //the time since this function was last called. i.e. milliseconds per frame
+  double fps =  1000.0 / delta_t;  // reciprocal of seconds per frame is frames per seconds (also convert from milliseconds to seconds)
   lastTime = currTime;
-
   return fps;
 }
 
