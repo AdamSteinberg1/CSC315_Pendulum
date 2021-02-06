@@ -1,8 +1,10 @@
 CXX = g++
 LDLIBS =  -lglut -lGL -lGLU -lm -lSDL
 
-OBJS = quit.o events.o display.o init.o model.o metrics.o
+OBJS = quit.o events.o display.o init.o model.o metrics.o camera.o
 HEADERS = prototypes.h
+
+CFLAGS += -std=c++17 #needed for clamp
 
 debug ?= n
 ifeq ($(debug), y)
@@ -35,6 +37,9 @@ model.o : model.cpp $(HEADERS)
 
 metrics.o : metrics.cpp $(HEADERS)
 	$(CXX) $(CFLAGS) metrics.cpp -c
+
+camera.o : camera.cpp $(HEADERS)
+	$(CXX) $(CFLAGS) camera.cpp -c
 
 clean:
 	rm *.o

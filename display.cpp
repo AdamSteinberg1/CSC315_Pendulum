@@ -1,15 +1,18 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
 #include <cmath>
 #include <string>
-#include <GL/glut.h>
 
+#include "prototypes.h"
+
+double camTheta = 225;
+double camPhi = 80;
 
 void drawPendulum(double theta)
 {
   glPushMatrix();
-  glTranslated(25.0, 4.0, 25.0);
 
     glPushMatrix();
     glRotated(theta * 180 / M_PI, 0,0,1);
@@ -87,7 +90,7 @@ void drawMan()
   glColor3f(1,1,1);
   glPushMatrix();
 
-  glTranslated(20.0, 6, 35.0);
+  glTranslated(-5, 2, 10.0);
   glScaled(0.668920, 0.668920,0.668920 ); //scale to make man 5' 8"
 
   //head
@@ -221,7 +224,6 @@ void drawMetrics(double fps, double period)
   glPopMatrix();
 }
 
-
 void display(double theta, double fps, double period)
 {
 
@@ -229,9 +231,7 @@ void display(double theta, double fps, double period)
   glLoadIdentity();   // Call this before setting the viewing position
 
   //Set camera parameters
-  gluLookAt(  0.0,   5.0, 0.0,  // Eye Position
-              25.0,   0.0, 25.0,  // Center of view
-              0.0,   1.0, 0.0); // Up Vector
+  setCamera(camTheta*M_PI/180, camPhi*M_PI/180);
 
   drawPendulum(theta);
   drawMan();

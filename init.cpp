@@ -58,7 +58,7 @@ void init()
   int bpp = info->vfmt->BitsPerPixel;   // Color depth in bits of our window.
 
   int flags = SDL_OPENGL | SDL_FULLSCREEN;  //Flags for fullscreen
-  //flags = SDL_OPENGL | SDL_RESIZABLE; //Flags for windowed
+  //int flags = SDL_OPENGL | SDL_RESIZABLE; //Flags for windowed
 
   if(SDL_SetVideoMode(width, height, bpp, flags) == 0)
   {

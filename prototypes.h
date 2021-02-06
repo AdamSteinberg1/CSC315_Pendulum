@@ -5,3 +5,4 @@ void step(double & theta, double & omega, double fps);
 void init();
 double getFPS();
 double getPeriod(double omega);
+void setCamera(double theta, double phi);
